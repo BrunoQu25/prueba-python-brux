@@ -4,8 +4,8 @@
 #
 # @return The output of this action, which must be a JSON object.
 #
-import sys
-import sys
+
+
 import json
 import requests
 from decouple import config
