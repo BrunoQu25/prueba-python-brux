@@ -8,12 +8,14 @@
 
 import json
 import requests
-from decouple import config
+
+from os import environ, listdir
+from dotenv import load_dotenv
 
 def main(dic):
     #NOTE: you must manually set API_KEY below using information retrieved from your IBM Cloud account.
 
-    API_KEY = config('APIKEY') # Paste the account APIKEY where the Watson Machine Learning service is
+    API_KEY = environ['APIKEY']# Paste the account APIKEY where the Watson Machine Learning service is
     token_response = requests.post('https://iam.cloud.ibm.com/identity/token', data={"apikey": API_KEY, "grant_type": 'urn:ibm:params:oauth:grant-type:apikey'})
     mltoken = token_response.json()["access_token"]
     
@@ -61,7 +63,7 @@ def main(dic):
         ]
     
     }
-    response_scoring = requests.post(config('URL'), json=payload_scoring, headers={'Authorization': 'Bearer ' + mltoken})
+    response_scoring = requests.post(environ['URL'], json=payload_scoring, headers={'Authorization': 'Bearer ' + mltoken})
     # REPLACE THE URL WITH YOUR DEPLOY URL.
       
     result = response_scoring.text
